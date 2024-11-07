@@ -16,7 +16,7 @@ export default function Home() {
         variant={"outline"}
         className="shadow"
       >
-        <Link href={"/ingresar-venta"}>
+        <Link href={"/ingreso-venta"}>
           Ingresar venta
         </Link>
       </Button>
