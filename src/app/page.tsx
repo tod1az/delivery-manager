@@ -8,6 +8,15 @@ export default function Home() {
         variant={"outline"}
         className="shadow"
       >
+        <Link href={"/registro-pan"}>
+          Registro Pan
+        </Link>
+      </Button>
+
+      <Button
+        variant={"outline"}
+        className="shadow"
+      >
         <Link href={"/ventas"}>
           Tabla de ventas
         </Link>
