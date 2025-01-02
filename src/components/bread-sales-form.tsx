@@ -97,10 +97,9 @@ export function BreadSalesForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="baguette">Baguette</SelectItem>
-                  <SelectItem value="ciabatta">Ciabatta</SelectItem>
-                  <SelectItem value="sourdough">Pan de masa madre</SelectItem>
-                  <SelectItem value="wholewheat">Pan integral</SelectItem>
+                  <SelectItem value="Especial">Especial</SelectItem>
+                  <SelectItem value="Batidos">Batidos</SelectItem>
+                  <SelectItem value="Hallullas">Hallullas</SelectItem>
                 </SelectContent>
               </Select>
               <FormDescription>
