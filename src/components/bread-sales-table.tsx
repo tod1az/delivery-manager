@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { es } from "date-fns/locale"
 
 // Simulated data - replace this with actual data fetching logic
 const salesData = [
@@ -87,7 +88,9 @@ export function BreadSalesTable() {
               selected={date}
               onSelect={setDate}
               numberOfMonths={2}
+              locale={es}
             />
+
           </PopoverContent>
         </Popover>
       </div>
