@@ -26,8 +26,7 @@ export default function DatePicker({ field }: Props) {
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
-          className={`w-[240px] pl-3 text-left font-normal ${!field.value && "text-muted-foreground"
-            }`}
+          className={`w-[240px] pl-3 text-left font-normal ${!field.value && "text-muted-foreground"}`}
         >
           {field.value ? (
             format(field.value, "d 'de' MMMM 'de' yyyy", { locale: es })
