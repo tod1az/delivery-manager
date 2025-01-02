@@ -3,7 +3,6 @@
 import { useState, useMemo } from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
-import { DateRange } from "react-day-picker"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -23,28 +22,20 @@ import { es } from "date-fns/locale"
 
 // Simulated data - replace this with actual data fetching logic
 const salesData = [
-  { id: 1, date: "2023-06-01", quantity: 100, breadType: "baguette" },
-  { id: 2, date: "2023-06-02", quantity: 150, breadType: "ciabatta" },
-  { id: 3, date: "2023-06-03", quantity: 200, breadType: "sourdough" },
-  { id: 4, date: "2023-06-04", quantity: 120, breadType: "wholewheat" },
-  { id: 5, date: "2023-06-05", quantity: 180, breadType: "baguette" },
+  { id: 1, date: "2023-06-01", quantity: 100, breadType: "Especial" },
+  { id: 2, date: "2023-06-02", quantity: 150, breadType: "Batidos" },
+  { id: 3, date: "2023-06-03", quantity: 200, breadType: "Hallullas" },
+  { id: 4, date: "2023-06-04", quantity: 120, breadType: "Batidos" },
+  { id: 5, date: "2023-06-05", quantity: 180, breadType: "Hallullas" },
 ]
 
 export function BreadSalesTable() {
   const today = new Date()
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: today,
-    to: today,
-  })
+  const [date, setDate] = useState<Date>(today)
+  console.log(date)
 
   const filteredSales = useMemo(() => {
     return salesData.filter((sale) => {
-      if (!date?.from) return true
-      const saleDate = new Date(sale.date)
-      if (date.to) {
-        return saleDate >= date.from && saleDate <= date.to
-      }
-      return saleDate.toDateString() === date.from.toDateString()
     })
   }, [date])
 
@@ -58,41 +49,7 @@ export function BreadSalesTable() {
   return (
     <div>
       <div className="flex items-center space-x-2 mb-4">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              id="date"
-              variant={"outline"}
-              className={`w-[300px] justify-start text-left font-normal`}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date?.from ? (
-                date.to ? (
-                  <>
-                    {format(date.from, "LLL dd, y")} -{" "}
-                    {format(date.to, "LLL dd, y")}
-                  </>
-                ) : (
-                  format(date.from, "LLL dd, y")
-                )
-              ) : (
-                <span>Seleccionar fecha</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              initialFocus
-              mode="range"
-              defaultMonth={date?.from}
-              selected={date}
-              onSelect={setDate}
-              numberOfMonths={2}
-              locale={es}
-            />
-
-          </PopoverContent>
-        </Popover>
+        <DatePicker date={date} setDate={setDate} />
       </div>
       <div className="space-y-8">
         <div>
@@ -139,4 +96,33 @@ export function BreadSalesTable() {
     </div>
   )
 }
-
+function DatePicker({ date, setDate }: { date: Date, setDate: React.Dispatch<React.SetStateAction<Date>> }) {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant={"outline"}
+          className={`w-[240px] pl-3 text-left font-normal `}
+        >
+          {date ? (
+            format(date, "d 'de' MMMM 'de' yyyy", { locale: es })
+          ) : (
+            <span className="text-black">Seleccione una fecha</span>
+          )}
+          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0" align="start">
+        <Calendar
+          mode="single"
+          selected={date}
+          onSelect={(newDate) => newDate && setDate(newDate)}
+          disabled={(date) =>
+            date > new Date() || date < new Date("1900-01-01")
+          }
+          initialFocus
+          locale={es}
+        />
+      </PopoverContent>
+    </Popover>)
+}
